@@ -121,4 +121,18 @@ public class MainActivity extends AppCompatActivity {
             return null;
         }
     }
+
+    private class MyAsyncTask extends AsyncTask<Void,Void,Void>{
+
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            return null;
+        }
+    }
  }
