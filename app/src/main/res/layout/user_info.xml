@@ -3,49 +3,156 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <ImageView
+        android:id="@+id/userAvatar"
+        android:layout_margin="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2"
+        android:src="@mipmap/ic_launcher_round"
+         />
+    <!--
     <LinearLayout
-        android:layout_weight="3"
+        android:layout_weight="4"
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="0dp">
-
-        <ImageView
-            android:id="@+id/userAvatar"
-            android:layout_margin="4dp"
-            android:layout_weight="4"
-            android:layout_width="0dp"
-            android:src="@mipmap/ic_launcher_round"
-            android:layout_height="match_parent" />
-
-        <LinearLayout
+        android:layout_height="0dp">-->
+        <TableLayout
             android:orientation="vertical"
-            android:layout_weight="6"
             android:layout_margin="4dp"
-            android:layout_width="0dp"
-            android:layout_height="match_parent">
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="4"
+            android:stretchColumns="0,1"
+            >
 
-            <TextView
-                android:id="@+id/firstName"
+            <TableRow android:layout_height="0dp"
                 android:layout_weight="1"
                 android:layout_width="match_parent"
-                android:layout_height="0dp" />
+                android:layout_margin="4dp"
+                >
+                <TextView
+                    android:text="Fist Name: "
+                    android:textSize="16sp"
+                    android:textColor="#000"
+                    android:layout_width="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="8dp"
+                    android:layout_height="match_parent" />
+                <TextView
+                    android:id="@+id/firstName"
+                    android:text="Rodrigo"
+                    android:textSize="16sp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="8dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
 
-            <TextView
-                android:id="@+id/lastName"
+            </TableRow>
+
+            <TableRow android:layout_height="0dp"
                 android:layout_weight="1"
                 android:layout_width="match_parent"
-                android:layout_height="0dp" />
+                android:layout_margin="4dp">
+                <TextView
+                    android:text="Last Name: "
+                    android:textSize="16sp"
+                    android:textColor="#000"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="8dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    />
+                <TextView
+                    android:id="@+id/lastName"
+                    android:text="Rovelo"
+                    android:textSize="16sp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="8dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    />
+            </TableRow>
+
+            <TableRow android:layout_height="0dp"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_margin="4dp">
+                <TextView
+                    android:text="Teléfono: "
+                    android:textSize="16sp"
+                    android:textColor="#000"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="8dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    />
+
+                <TextView
+                    android:id="@+id/telefono"
+                    android:textSize="16sp"
+                    android:text="2257-7777"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="8dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    />
+            </TableRow>
+
+            <TableRow android:layout_height="0dp"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_margin="4dp">
+
+                <TextView
+                    android:text="Correo Electrónico: "
+                    android:textSize="16sp"
+                    android:textColor="#000"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="8dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    />
+                <TextView
+                    android:id="@+id/email"
+                    android:textSize="16sp"
+                    android:text="uca.edu.sv"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="8dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    />
+            </TableRow>
+
+            <TableRow android:layout_height="0dp"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_margin="4dp">
+                <TextView
+                    android:text="Facebook: "
+                    android:textSize="16sp"
+                    android:textColor="#000"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="8dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    />
+
+                <TextView
+                    android:id="@+id/facebook"
+                    android:textSize="16sp"
+                    android:text="PUSSY DESTROYER"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="8dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    />
+            </TableRow>
 
 
-        </LinearLayout>
+        </TableLayout>
 
 
-    </LinearLayout>
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recyclerView"
-        android:layout_weight="7"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"/>
+    <!--</LinearLayout>-->
 
 </LinearLayout>

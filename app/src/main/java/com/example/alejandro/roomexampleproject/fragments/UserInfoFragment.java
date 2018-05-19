@@ -19,7 +19,7 @@ import java.util.List;
 public class UserInfoFragment extends Fragment{
     User user;
     List<Note> userNotes;
-    TextView firstName, lastName;
+    TextView firstName, lastName,telefono,email,facebook;
 
 
     @Nullable
@@ -29,9 +29,15 @@ public class UserInfoFragment extends Fragment{
 
         firstName = v.findViewById(R.id.firstName);
         lastName = v.findViewById(R.id.lastName);
+        telefono = v.findViewById(R.id.telefono);
+        email = v.findViewById(R.id.email);
+        facebook = v.findViewById(R.id.facebook);
 
         firstName.setText(user.getFirstName());
         lastName.setText(user.getLastName());
+        telefono.setText(user.getPhone());
+        email.setText(user.getEmail());
+        facebook.setText(user.getFacebook_user());
 
         return v;
     }

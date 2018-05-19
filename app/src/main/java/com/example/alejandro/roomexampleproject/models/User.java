@@ -63,4 +63,20 @@ public class User {
     public void setPhone(String phone) {
         this.phone = phone;
     }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getFacebook_user() {
+        return facebook_user;
+    }
+
+    public void setFacebook_user(String facebook_user) {
+        this.facebook_user = facebook_user;
+    }
 }

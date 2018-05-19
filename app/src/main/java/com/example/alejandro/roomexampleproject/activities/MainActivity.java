@@ -120,8 +120,8 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         protected Void doInBackground(Void... voids) {
-            userdao.insert(new User("Alejandro", "Velasco", "22577777","",""),
-                    new User("Enrique", "Palacios", "22577777","",""));
+            userdao.insert(new User("Alejandro", "Velasco", "22577777","00357215@uca.edu.sv","PUSSY DESTROYER"),
+                    new User("Enrique", "Palacios", "22577777","00008415@uca.edu.sv","DICK DESTROYER"));
             return null;
         }
     }
