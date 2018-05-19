@@ -69,12 +69,16 @@ public class MainActivity extends AppCompatActivity {
                 fragmentTransaction = fragmentManager.beginTransaction();
 
                 switch (item.getItemId()){
-                    case R.id.user:
+                    case R.id.notas:
                         new GetUsersAsync(database).execute();
                         break;
 
-                    case R.id.notes:
+                    case R.id.materias:
                         Log.d("DrawerLayout", "Notes not implemented yet");
+                        break;
+
+                    case R.id.perfil:
+
                         break;
                 }
                 return true;
@@ -116,8 +120,8 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         protected Void doInBackground(Void... voids) {
-            userdao.insert(new User("Alejandro", "Velasco", "22577777"),
-                    new User("Enrique", "Palacios", "22577777"));
+            userdao.insert(new User("Alejandro", "Velasco", "22577777","",""),
+                    new User("Enrique", "Palacios", "22577777","",""));
             return null;
         }
     }

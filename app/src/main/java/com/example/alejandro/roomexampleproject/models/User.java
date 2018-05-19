@@ -15,10 +15,18 @@ public class User {
     @ColumnInfo(name = "last_name")
     private String lastName;
 
-    public User(String firstName, String lastName, String phone) {
+    @ColumnInfo(name = "email")
+    private String email;
+
+    @ColumnInfo(name = "facebook_user")
+    private String facebook_user;
+
+    public User(String firstName, String lastName, String phone,String email, String facebook_user) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.phone = phone;
+        this.email = email;
+        this.facebook_user = facebook_user;
     }
 
     @ColumnInfo(name = "phone_number")
