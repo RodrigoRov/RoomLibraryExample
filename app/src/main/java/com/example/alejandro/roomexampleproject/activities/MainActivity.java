@@ -16,9 +16,12 @@ import android.view.MenuItem;
 
 import com.example.alejandro.roomexampleproject.R;
 import com.example.alejandro.roomexampleproject.database.AppDatabase;
+import com.example.alejandro.roomexampleproject.database.daos.MateriaDao;
 import com.example.alejandro.roomexampleproject.database.daos.NoteDao;
 import com.example.alejandro.roomexampleproject.database.daos.UserDao;
+import com.example.alejandro.roomexampleproject.fragments.ListaMateria;
 import com.example.alejandro.roomexampleproject.fragments.UserInfoFragment;
+import com.example.alejandro.roomexampleproject.models.Materia;
 import com.example.alejandro.roomexampleproject.models.User;
 
 public class MainActivity extends AppCompatActivity {
@@ -70,15 +73,15 @@ public class MainActivity extends AppCompatActivity {
 
                 switch (item.getItemId()){
                     case R.id.notas:
-                        new GetUsersAsync(database).execute();
+
                         break;
 
                     case R.id.materias:
-                        Log.d("DrawerLayout", "Notes not implemented yet");
+                        new StartMaterias(database).execute();
                         break;
 
                     case R.id.perfil:
-
+                        new GetUsersAsync(database).execute();
                         break;
                 }
                 return true;
@@ -113,31 +116,45 @@ public class MainActivity extends AppCompatActivity {
     private class FillInitialDbAsync extends AsyncTask<Void, Void, Void>{
         private final UserDao userdao;
         private final NoteDao notedao;
+        private final MateriaDao materiaDao;
 
         private FillInitialDbAsync(AppDatabase db) {
             this.userdao = db.userDao();
             this.notedao = db.noteDao();
+            this.materiaDao = db.materiaDao();
         }
 
         @Override
         protected Void doInBackground(Void... voids) {
-            userdao.insert(new User("Alejandro", "Velasco", "22577777","00357215@uca.edu.sv","PUSSY DESTROYER"),
-                    new User("Enrique", "Palacios", "22577777","00008415@uca.edu.sv","DICK DESTROYER"));
+            userdao.insert(new User(1,"Alejandro", "Velasco", "22577777","00357215@uca.edu.sv","PUSSY DESTROYER"),
+                    new User(2,"Enrique", "Palacios", "22577777","00008415@uca.edu.sv","DICK DESTROYER"));
+            materiaDao.insert(new Materia("Programacion Moviles",8,"Varela-chan",1));
+            materiaDao.insert(new Materia("Programacion Java",6,"Nestor-chan",1));
             return null;
         }
     }
 
-    private class MyAsyncTask extends AsyncTask<Void,Void,Void>{
+    private class StartMaterias extends AsyncTask<Void,User,User>{
+        UserDao userDao;
 
-
+        private StartMaterias(AppDatabase db){
+            userDao = db.userDao();
+        }
         @Override
-        protected void onPostExecute(Void aVoid) {
-            super.onPostExecute(aVoid);
+        protected void onPostExecute(User user) {
+            super.onPostExecute(user);
+            ListaMateria fragment = new ListaMateria();
+            fragment.setUser(user);
+            fragment.setDatabase(database);
+
+            fragmentTransaction.replace(R.id.contentFrame, fragment);
+            fragmentTransaction.commit();
         }
 
         @Override
-        protected Void doInBackground(Void... voids) {
-            return null;
+        protected User doInBackground(Void... voids) {
+
+            return userDao.getAll().get(0);
         }
     }
  }

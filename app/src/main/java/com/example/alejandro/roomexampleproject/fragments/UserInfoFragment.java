@@ -56,12 +56,11 @@ public class UserInfoFragment extends Fragment{
         guardar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                User nuevoUsu = new User(firstName.getText().toString(),
+                User nuevoUsu = new User(user.getId(),firstName.getText().toString(),
                         lastName.getText().toString(),
                         telefono.getText().toString(),
                         email.getText().toString(),
                         facebook.getText().toString());
-                nuevoUsu.setId(user.getId());
 
                 new UpdateUser(database,nuevoUsu);
                 user = nuevoUsu;

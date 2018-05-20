@@ -8,12 +8,14 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 
+import com.example.alejandro.roomexampleproject.database.daos.MateriaDao;
 import com.example.alejandro.roomexampleproject.database.daos.NoteDao;
 import com.example.alejandro.roomexampleproject.database.daos.UserDao;
+import com.example.alejandro.roomexampleproject.models.Materia;
 import com.example.alejandro.roomexampleproject.models.Note;
 import com.example.alejandro.roomexampleproject.models.User;
 
-@Database(entities = {User.class, Note.class}, version = 1)
+@Database(entities = {User.class, Note.class, Materia.class}, version = 2, exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase{
     private static final String DB_NAME = "notesDatabase.db";
     private static volatile AppDatabase instance;
@@ -31,9 +33,10 @@ public abstract class AppDatabase extends RoomDatabase{
                 context,
                 AppDatabase.class,
                 DB_NAME
-        ).build();
+        ).fallbackToDestructiveMigration().build();
     }
 
     public abstract UserDao userDao();
     public abstract NoteDao noteDao();
+    public abstract MateriaDao materiaDao();
 }

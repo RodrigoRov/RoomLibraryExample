@@ -7,26 +7,25 @@ import android.arch.persistence.room.OnConflictStrategy;
 import android.arch.persistence.room.Query;
 import android.arch.persistence.room.Update;
 
-import com.example.alejandro.roomexampleproject.models.Note;
+import com.example.alejandro.roomexampleproject.models.Materia;
 
-import java.util.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 @Dao
-public interface NoteDao {
+public interface MateriaDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insert(Note note);
+    void insert(Materia materia);
 
     @Update
-    void update(Note... notes);
+    void update(Materia... materias);
 
     @Delete
-    void delete(Note... notes);
+    void delete(Materia... materias);
 
-    @Query("SELECT * FROM Note")
-    List<Note> getAll();
+    @Query("SELECT * FROM Materia")
+    List<Materia> getAll();
 
-    @Query("SELECT * FROM Note WHERE id=(:id)")
-    Note findNoteById(int id);
-
+    @Query("SELECT * FROM Materia WHERE user_id=(:userId)")
+    List<Materia> getMaterias(int userId);
 }
