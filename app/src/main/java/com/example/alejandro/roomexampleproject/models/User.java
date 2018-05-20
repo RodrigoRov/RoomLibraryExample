@@ -21,6 +21,9 @@ public class User {
     @ColumnInfo(name = "facebook_user")
     private String facebook_user;
 
+    @ColumnInfo(name = "phone_number")
+    private String phone;
+
     public User(String firstName, String lastName, String phone,String email, String facebook_user) {
         this.firstName = firstName;
         this.lastName = lastName;
@@ -28,9 +31,6 @@ public class User {
         this.email = email;
         this.facebook_user = facebook_user;
     }
-
-    @ColumnInfo(name = "phone_number")
-    private String phone;
 
     public int getId() {
         return id;

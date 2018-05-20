@@ -39,12 +39,13 @@
                     android:layout_gravity="center"
                     android:layout_marginTop="8dp"
                     android:layout_height="match_parent" />
-                <TextView
+                <EditText
                     android:id="@+id/firstName"
+                    android:enabled="false"
                     android:text="Rodrigo"
                     android:textSize="16sp"
+                    android:inputType="text"
                     android:layout_gravity="center"
-                    android:layout_marginTop="8dp"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent" />
 
@@ -63,12 +64,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     />
-                <TextView
+                <EditText
                     android:id="@+id/lastName"
                     android:text="Rovelo"
+                    android:enabled="false"
                     android:textSize="16sp"
+                    android:inputType="text"
                     android:layout_gravity="center"
-                    android:layout_marginTop="8dp"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     />
@@ -88,12 +90,13 @@
                     android:layout_height="match_parent"
                     />
 
-                <TextView
+                <EditText
                     android:id="@+id/telefono"
                     android:textSize="16sp"
                     android:text="2257-7777"
+                    android:enabled="false"
+                    android:inputType="phone"
                     android:layout_gravity="center"
-                    android:layout_marginTop="8dp"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     />
@@ -113,12 +116,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     />
-                <TextView
+                <EditText
                     android:id="@+id/email"
                     android:textSize="16sp"
+                    android:enabled="false"
+                    android:inputType="textEmailAddress"
                     android:text="uca.edu.sv"
                     android:layout_gravity="center"
-                    android:layout_marginTop="8dp"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     />
@@ -138,12 +142,13 @@
                     android:layout_height="match_parent"
                     />
 
-                <TextView
+                <EditText
                     android:id="@+id/facebook"
                     android:textSize="16sp"
+                    android:enabled="false"
                     android:text="PUSSY DESTROYER"
+                    android:inputType="text"
                     android:layout_gravity="center"
-                    android:layout_marginTop="8dp"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     />
@@ -151,7 +156,27 @@
 
 
         </TableLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_margin="8dp">
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/cancelar_cambios_perfil"
+            android:layout_width="0dp"
+            android:text="@string/boton_editar"
+            android:layout_height="match_parent"
+            android:background="@drawable/my_button"
+            android:layout_weight="1"/>
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/guardar_cambios_perfil"
+            android:layout_width="0dp"
+            android:background="@drawable/my_button"
+            android:text="Guardar"
+            android:enabled="false"
+            android:layout_height="match_parent"
+            android:layout_weight="1"/>
 
+    </LinearLayout>
 
     <!--</LinearLayout>-->
 

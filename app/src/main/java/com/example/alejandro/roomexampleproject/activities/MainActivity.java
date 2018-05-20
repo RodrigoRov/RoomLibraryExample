@@ -103,6 +103,7 @@ public class MainActivity extends AppCompatActivity {
             super.onPostExecute(user);
             UserInfoFragment fragment = new UserInfoFragment();
             fragment.setUser(user);
+            fragment.setDatabase(database);
 
             fragmentTransaction.replace(R.id.contentFrame, fragment);
             fragmentTransaction.commit();
