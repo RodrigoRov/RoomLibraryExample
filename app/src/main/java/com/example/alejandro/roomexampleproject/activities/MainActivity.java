@@ -11,7 +11,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 
 import com.example.alejandro.roomexampleproject.R;
@@ -19,8 +18,9 @@ import com.example.alejandro.roomexampleproject.database.AppDatabase;
 import com.example.alejandro.roomexampleproject.database.daos.MateriaDao;
 import com.example.alejandro.roomexampleproject.database.daos.NoteDao;
 import com.example.alejandro.roomexampleproject.database.daos.UserDao;
-import com.example.alejandro.roomexampleproject.fragments.ListaMateria;
-import com.example.alejandro.roomexampleproject.fragments.ListaNotas;
+import com.example.alejandro.roomexampleproject.fragments.ListaMateriaFragment;
+import com.example.alejandro.roomexampleproject.fragments.ListaNotasFragment;
+import com.example.alejandro.roomexampleproject.fragments.LoginFragment;
 import com.example.alejandro.roomexampleproject.fragments.UserInfoFragment;
 import com.example.alejandro.roomexampleproject.models.Materia;
 import com.example.alejandro.roomexampleproject.models.User;
@@ -32,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
     AppDatabase database;
     FragmentManager fragmentManager;
     FragmentTransaction fragmentTransaction;
+    boolean Allowed;
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -62,6 +63,16 @@ public class MainActivity extends AppCompatActivity {
         //setting up drawerlayout
         drawerLayout = findViewById(R.id.drawerLayout);
 
+        LoginFragment loginFragment = new LoginFragment();
+        fragmentManager = getSupportFragmentManager();
+        fragmentTransaction = fragmentManager.beginTransaction();
+
+
+        fragmentTransaction.add(R.id.contentFrame,loginFragment);
+        fragmentTransaction.commit();
+        Allowed = loginFragment.isEncontro();
+
+
         NavigationView navigationView = findViewById(R.id.navigationView);
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -69,20 +80,24 @@ public class MainActivity extends AppCompatActivity {
                 item.setChecked(true);
                 drawerLayout.closeDrawers();
 
-                fragmentManager = getSupportFragmentManager();
-                fragmentTransaction = fragmentManager.beginTransaction();
-
                 switch (item.getItemId()){
                     case R.id.notas:
-                        new StartNotas(database).execute();
+                        if(Allowed)
+                            new StartNotas(database).execute();
                         break;
 
                     case R.id.materias:
-                        new StartMaterias(database).execute();
+                        if(Allowed)
+                            new StartMaterias(database).execute();
                         break;
 
                     case R.id.perfil:
-                        new GetUsersAsync(database).execute();
+                        if(Allowed)
+                            new GetUsersAsync(database).execute();
+                        break;
+                    case R.id.extra:
+                        if(Allowed)
+                            new StartExtras().execute();
                         break;
                 }
                 return true;
@@ -144,7 +159,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(User user) {
             super.onPostExecute(user);
-            ListaMateria fragment = new ListaMateria();
+            ListaMateriaFragment fragment = new ListaMateriaFragment();
             fragment.setUser(user);
             fragment.setDatabase(database);
 
@@ -174,7 +189,7 @@ public class MainActivity extends AppCompatActivity {
         protected void onPostExecute(User user) {
             super.onPostExecute(user);
             super.onPostExecute(user);
-            ListaNotas fragment = new ListaNotas();
+            ListaNotasFragment fragment = new ListaNotasFragment();
             fragment.setUser(user);
             fragment.setDatabase(database);
 
@@ -182,4 +197,13 @@ public class MainActivity extends AppCompatActivity {
             fragmentTransaction.commit();
         }
     }
+
+    private class StartExtras extends AsyncTask<Void,User,User>{
+        @Override
+        protected User doInBackground(Void... voids) {
+            return null;
+        }
+    }
+
+
  }
