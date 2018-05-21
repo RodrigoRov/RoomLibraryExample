@@ -29,4 +29,6 @@ public interface NoteDao {
     @Query("SELECT * FROM Note WHERE id=(:id)")
     Note findNoteById(int id);
 
+    @Query("SELECT * FROM Note WHERE materia_id=(:idM)")
+    List<Note> findNotas(int idM);
 }

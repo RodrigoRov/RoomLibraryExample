@@ -26,9 +26,9 @@ public class ListaMateria extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.lista_materias,container,false);
-        for(Materia m:database.materiaDao().getAll()){
+        /*for(Materia m:database.materiaDao().getAll()){
             m.setUserId(user.getId());
-        }
+        }*/
 
         recyclerView = v.findViewById(R.id.lista_materias_recycler);
         adapter = new ListaMateriaAdapter(this.getContext(),database.materiaDao().getMaterias(user.getId()));

@@ -20,6 +20,7 @@ import com.example.alejandro.roomexampleproject.database.daos.MateriaDao;
 import com.example.alejandro.roomexampleproject.database.daos.NoteDao;
 import com.example.alejandro.roomexampleproject.database.daos.UserDao;
 import com.example.alejandro.roomexampleproject.fragments.ListaMateria;
+import com.example.alejandro.roomexampleproject.fragments.ListaNotas;
 import com.example.alejandro.roomexampleproject.fragments.UserInfoFragment;
 import com.example.alejandro.roomexampleproject.models.Materia;
 import com.example.alejandro.roomexampleproject.models.User;
@@ -73,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
 
                 switch (item.getItemId()){
                     case R.id.notas:
-
+                        new StartNotas(database).execute();
                         break;
 
                     case R.id.materias:
@@ -155,6 +156,30 @@ public class MainActivity extends AppCompatActivity {
         protected User doInBackground(Void... voids) {
 
             return userDao.getAll().get(0);
+        }
+    }
+
+    private class StartNotas extends AsyncTask<Void,User,User>{
+
+        UserDao userDao;
+
+        private StartNotas(AppDatabase db){userDao = db.userDao();}
+        @Override
+        protected User doInBackground(Void... voids) {
+
+            return userDao.getAll().get(0);
+        }
+
+        @Override
+        protected void onPostExecute(User user) {
+            super.onPostExecute(user);
+            super.onPostExecute(user);
+            ListaNotas fragment = new ListaNotas();
+            fragment.setUser(user);
+            fragment.setDatabase(database);
+
+            fragmentTransaction.replace(R.id.contentFrame, fragment);
+            fragmentTransaction.commit();
         }
     }
  }
