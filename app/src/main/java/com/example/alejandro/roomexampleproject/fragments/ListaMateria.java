@@ -1,5 +1,6 @@
 package com.example.alejandro.roomexampleproject.fragments;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -13,8 +14,12 @@ import android.view.ViewGroup;
 import com.example.alejandro.roomexampleproject.Adapters.ListaMateriaAdapter;
 import com.example.alejandro.roomexampleproject.R;
 import com.example.alejandro.roomexampleproject.database.AppDatabase;
+import com.example.alejandro.roomexampleproject.database.daos.MateriaDao;
 import com.example.alejandro.roomexampleproject.models.Materia;
 import com.example.alejandro.roomexampleproject.models.User;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ListaMateria extends Fragment {
     RecyclerView recyclerView;
@@ -31,8 +36,9 @@ public class ListaMateria extends Fragment {
         }*/
 
         recyclerView = v.findViewById(R.id.lista_materias_recycler);
-        adapter = new ListaMateriaAdapter(this.getContext(),database.materiaDao().getMaterias(user.getId()));
-        recyclerView.setAdapter(adapter);
+
+        new setAdapter(database).execute(user);
+
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this.getContext());
         recyclerView.setLayoutManager(linearLayoutManager);
         return v;
@@ -52,5 +58,28 @@ public class ListaMateria extends Fragment {
 
     public void setDatabase(AppDatabase database) {
         this.database = database;
+    }
+
+    private class setAdapter extends AsyncTask<User,Void,Void>{
+        MateriaDao materiaDao;
+        List<Materia> materias;
+
+        setAdapter(AppDatabase db){
+            materiaDao = db.materiaDao();
+        }
+
+        @Override
+        protected Void doInBackground(User... user) {
+            materias=materiaDao.getMaterias(user[0].getId());
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            adapter = new ListaMateriaAdapter(getContext(),materias);
+            recyclerView.setAdapter(adapter);
+
+        }
     }
 }

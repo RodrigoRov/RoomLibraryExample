@@ -1,5 +1,6 @@
 package com.example.alejandro.roomexampleproject.fragments;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -13,6 +14,8 @@ import android.view.ViewGroup;
 import com.example.alejandro.roomexampleproject.Adapters.ListaNotasAdapter;
 import com.example.alejandro.roomexampleproject.R;
 import com.example.alejandro.roomexampleproject.database.AppDatabase;
+import com.example.alejandro.roomexampleproject.database.daos.MateriaDao;
+import com.example.alejandro.roomexampleproject.database.daos.NoteDao;
 import com.example.alejandro.roomexampleproject.models.Materia;
 import com.example.alejandro.roomexampleproject.models.Note;
 import com.example.alejandro.roomexampleproject.models.User;
@@ -24,24 +27,17 @@ public class ListaNotas extends Fragment {
     AppDatabase database;
     RecyclerView recyclerView;
     User user;
-    ArrayList<String> nomMaterias = new ArrayList<>();
+
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.lista_notas,container,false);
-
-        List<Materia> materias = database.materiaDao().getMaterias(user.getId());
-        List<Note> notes = new ArrayList<>();
-        for(Materia m:materias){
-            notes.addAll(database.noteDao().findNotas(m.getIdMateria()));
-            nomMaterias.add(m.getNombre_Materia());
-        }
-
         recyclerView = v.findViewById(R.id.lista_notas_recycler);
-        ListaNotasAdapter adapter = new ListaNotasAdapter(getContext(),notes,nomMaterias);
+
+        new setAdapter(database).execute();
         LinearLayoutManager  linearLayoutManager = new LinearLayoutManager(getContext());
-        recyclerView.setAdapter(adapter);
+
         recyclerView.setLayoutManager(linearLayoutManager);
 
 
@@ -55,4 +51,35 @@ public class ListaNotas extends Fragment {
     public void setUser(User user) {
         this.user = user;
     }
+
+    private class setAdapter extends AsyncTask<Void,Void,Void>{
+        NoteDao noteDao;
+        MateriaDao materiaDao;
+        List<Note> notes;
+        ArrayList<String> nomMaterias = new ArrayList<>();
+
+        setAdapter(AppDatabase db){
+            noteDao = db.noteDao();
+            materiaDao = db.materiaDao();
+        };
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            List<Materia> materias =  materiaDao.getMaterias(user.getId());
+            notes = new ArrayList<>();
+            for(Materia m:materias){
+                notes.addAll(noteDao.findNotas(m.getIdMateria()));
+                nomMaterias.add(m.getNombre_Materia());
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            ListaNotasAdapter adapter = new ListaNotasAdapter(getContext(),notes,nomMaterias);
+            recyclerView.setAdapter(adapter);
+        }
+    }
+
 }

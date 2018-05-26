@@ -50,7 +50,6 @@ public class MainActivity extends AppCompatActivity {
 
         //database
         database = AppDatabase.getInstance(getApplicationContext());
-        new FillInitialDbAsync(database).execute();
 
         //setting up the toolbar
         toolbar = findViewById(R.id.toolbar);
@@ -114,31 +113,13 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private class FillInitialDbAsync extends AsyncTask<Void, Void, Void>{
-        private final UserDao userdao;
-        private final NoteDao notedao;
-        private final MateriaDao materiaDao;
-
-        private FillInitialDbAsync(AppDatabase db) {
-            this.userdao = db.userDao();
-            this.notedao = db.noteDao();
-            this.materiaDao = db.materiaDao();
-        }
-
-        @Override
-        protected Void doInBackground(Void... voids) {
-
-
-            return null;
-        }
-    }
-
     private class StartMaterias extends AsyncTask<Void,User,User>{
         UserDao userDao;
 
         private StartMaterias(AppDatabase db){
             userDao = db.userDao();
         }
+
         @Override
         protected void onPostExecute(User user) {
             super.onPostExecute(user);
