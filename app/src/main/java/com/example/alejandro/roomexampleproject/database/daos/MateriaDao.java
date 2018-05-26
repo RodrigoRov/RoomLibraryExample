@@ -23,9 +23,14 @@ public interface MateriaDao {
     @Delete
     void delete(Materia... materias);
 
+    @Query("DELETE FROM Materia")
+    void deleteAll();
+
     @Query("SELECT * FROM Materia")
     List<Materia> getAll();
 
     @Query("SELECT * FROM Materia WHERE user_id=(:userId)")
     List<Materia> getMaterias(int userId);
+
+
 }

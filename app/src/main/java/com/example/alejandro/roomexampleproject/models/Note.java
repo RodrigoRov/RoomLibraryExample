@@ -19,10 +19,6 @@ public class Note {
     @ColumnInfo(name = "data")
     private String data;
 
-    public Note() {
-    }
-
-    @Ignore
     public Note(String data, int materiaId) {
         this.data = data;
         this.materiaId = materiaId;

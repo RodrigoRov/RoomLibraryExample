@@ -33,8 +33,46 @@ public abstract class AppDatabase extends RoomDatabase{
                 context,
                 AppDatabase.class,
                 DB_NAME
-        ).fallbackToDestructiveMigration().build();
+        ).addCallback(sRoomDatabaseCallback).build();
     }
+
+    private static RoomDatabase.Callback sRoomDatabaseCallback = new RoomDatabase.Callback(){
+        @Override
+        public void onOpen(@NonNull SupportSQLiteDatabase db) {
+            super.onOpen(db);
+            new PopulateDbAsync(instance);
+        }
+    };
+
+    private static class PopulateDbAsync extends AsyncTask<Void,Void,Void>{
+
+        private final UserDao userDao;
+        private final MateriaDao materiaDao;
+        private final NoteDao noteDao;
+
+        PopulateDbAsync(AppDatabase db){
+            userDao = db.userDao();
+            materiaDao = db.materiaDao();
+            noteDao = db.noteDao();
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            userDao.deleteAll();
+            materiaDao.deleteAll();
+            userDao.insert(new User(1,"Alejandro", "Velasco", "22577777","00357215@uca.edu.sv","PUSSY DESTROYER"),
+                    new User(2,"Enrique", "Palacios", "22577777","00008415@uca.edu.sv","DICK DESTROYER"));
+            Materia materia1 = new Materia("Programacion Moviles",8,"Varela-chan",1);
+            Materia materia2 = new Materia("Programacion Java",6,"Nestor-chan",1);
+            materiaDao.insert(materia1);
+            materiaDao.insert(materia2);
+            noteDao.insert(new Note("Ella no me ama",materia1.getIdMateria()));
+            noteDao.insert(new Note("Ella si me ama",materia2.getIdMateria()));
+            return null;
+        }
+    }
+
+
 
     public abstract UserDao userDao();
     public abstract NoteDao noteDao();
