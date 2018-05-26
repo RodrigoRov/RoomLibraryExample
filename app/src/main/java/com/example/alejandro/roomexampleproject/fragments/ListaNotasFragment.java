@@ -11,75 +11,77 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.alejandro.roomexampleproject.Adapters.ListaMateriaAdapter;
+import com.example.alejandro.roomexampleproject.Adapters.ListaNotasAdapter;
 import com.example.alejandro.roomexampleproject.R;
 import com.example.alejandro.roomexampleproject.database.AppDatabase;
 import com.example.alejandro.roomexampleproject.database.daos.MateriaDao;
+import com.example.alejandro.roomexampleproject.database.daos.NoteDao;
 import com.example.alejandro.roomexampleproject.models.Materia;
+import com.example.alejandro.roomexampleproject.models.Note;
 import com.example.alejandro.roomexampleproject.models.User;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ListaMateria extends Fragment {
-    RecyclerView recyclerView;
-    ListaMateriaAdapter adapter;
-    User user;
+public class ListaNotasFragment extends Fragment {
     AppDatabase database;
+    RecyclerView recyclerView;
+    User user;
+
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.lista_materias,container,false);
-        /*for(Materia m:database.materiaDao().getAll()){
-            m.setUserId(user.getId());
-        }*/
+        View v = inflater.inflate(R.layout.lista_notas,container,false);
+        recyclerView = v.findViewById(R.id.lista_notas_recycler);
 
-        recyclerView = v.findViewById(R.id.lista_materias_recycler);
+        new setAdapter(database).execute();
+        LinearLayoutManager  linearLayoutManager = new LinearLayoutManager(getContext());
 
-        new setAdapter(database).execute(user);
-
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this.getContext());
         recyclerView.setLayoutManager(linearLayoutManager);
+
+
+
         return v;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public AppDatabase getDatabase() {
-        return database;
     }
 
     public void setDatabase(AppDatabase database) {
         this.database = database;
     }
 
-    private class setAdapter extends AsyncTask<User,Void,Void>{
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    private class setAdapter extends AsyncTask<Void,Void,Void>{
+        NoteDao noteDao;
         MateriaDao materiaDao;
-        List<Materia> materias;
+        List<Note> notes;
+        ArrayList<String> nomMaterias = new ArrayList<>();
 
         setAdapter(AppDatabase db){
+            noteDao = db.noteDao();
             materiaDao = db.materiaDao();
-        }
+        };
 
         @Override
-        protected Void doInBackground(User... user) {
-            materias=materiaDao.getMaterias(user[0].getId());
+        protected Void doInBackground(Void... voids) {
+            List<Materia> materias =  materiaDao.getMaterias(user.getId());
+            notes = new ArrayList<>();
+            for(Materia m:materias){
+                notes.addAll(noteDao.findNotas(m.getIdMateria()));
+                nomMaterias.add(m.getNombre_Materia());
+            }
             return null;
         }
 
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
-            adapter = new ListaMateriaAdapter(getContext(),materias);
+            ListaNotasAdapter adapter = new ListaNotasAdapter(getContext(),notes,nomMaterias);
+            adapter.setNotas(true);
             recyclerView.setAdapter(adapter);
-
         }
     }
+
 }

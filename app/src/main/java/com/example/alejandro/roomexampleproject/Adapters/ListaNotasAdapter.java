@@ -18,6 +18,13 @@ public class ListaNotasAdapter extends RecyclerView.Adapter<ListaNotasAdapter.Vi
     List<Note> noteList;
     Context mCtxt;
     ArrayList<String> nomMaterias;
+    private onItemClicked onClick;
+    boolean isNotas = true;
+
+
+    public interface onItemClicked{
+        void onItemClick(int position);
+    }
 
     public ListaNotasAdapter(Context context, List<Note> noteList,ArrayList<String> nomMaterias){
         this.noteList = noteList;
@@ -33,10 +40,19 @@ public class ListaNotasAdapter extends RecyclerView.Adapter<ListaNotasAdapter.Vi
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ListaNotasAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ListaNotasAdapter.ViewHolder holder, final int position) {
         Note note = noteList.get(position);
         holder.desc.setText(note.getData());
         holder.nombreMateria.setText(nomMaterias.get(position));
+
+        if(!isNotas) {
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onClick.onItemClick(position);
+                }
+            });
+        }
     }
 
     @Override
@@ -51,5 +67,13 @@ public class ListaNotasAdapter extends RecyclerView.Adapter<ListaNotasAdapter.Vi
             nombreMateria = view.findViewById(R.id.lista_notas_materia);
             desc = view.findViewById(R.id.lista_notas_descripcion);
         }
+    }
+
+    public void setOnClick(onItemClicked onClick) {
+        this.onClick = onClick;
+    }
+
+    public void setNotas(boolean notas) {
+        isNotas = notas;
     }
 }

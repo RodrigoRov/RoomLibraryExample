@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/Login_login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="200dp"
+        android:text="Login"
+        android:textColor="#000"
+        android:textSize="24sp"
+        />
+        <TextView
+            android:id="@+id/Login_usernametxt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_below="@id/Login_login"
+            android:layout_marginTop="24dp"
+            android:textSize="18sp"
+            android:textColor="#000"
+            android:layout_toStartOf="@id/Login_login"
+            android:text="First Name: " />
+
+        <EditText
+            android:id="@+id/Login_first_name"
+            android:inputType="text"
+            android:layout_width="130dp"
+            android:layout_centerInParent="true"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_toEndOf="@id/Login_usernametxt"
+            android:layout_alignBaseline="@id/Login_usernametxt"
+            android:hint="Rodrigo Rovelo"
+            android:maxWidth="130dp"/>
+
+        <TextView
+            android:id="@+id/Login_passwordtxt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="Last Name: "
+            android:layout_alignStart="@id/Login_usernametxt"
+            android:layout_marginTop="24dp"
+            android:textSize="18sp"
+            android:textColor="#000"
+            android:layout_below="@id/Login_usernametxt"
+            />
+        <EditText
+            android:id="@+id/Login_last_name"
+            android:inputType="text"
+            android:layout_centerInParent="true"
+            android:layout_width="130dp"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/Login_passwordtxt"
+            android:layout_marginStart="16dp"
+            android:layout_alignBaseline="@id/Login_passwordtxt"
+            android:maxWidth="130dp"/>
+        <Button
+            android:id="@+id/Login_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/Login_last_name"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="24dp"
+            android:text="Log in"
+            android:background="@drawable/my_button"
+            />
+
+</RelativeLayout>

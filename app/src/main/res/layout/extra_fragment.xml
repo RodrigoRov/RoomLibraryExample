@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/extra_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="4"
+        android:layout_margin="8dp"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2"
+        android:layout_margin="8dp">
+
+        <TextView
+            android:id="@+id/extra_nombre_materia"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Programacion"
+            android:textSize="24sp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="16dp"
+            android:textColor="#000"
+            android:layout_marginStart="16dp"
+            />
+        <TextView
+            android:id="@+id/extra_idNotatxt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Id Nota: "
+            android:layout_toEndOf="@id/extra_nombre_materia"
+            android:layout_alignBaseline="@id/extra_nombre_materia"
+            android:layout_marginLeft="16dp"
+            android:textSize="18sp"
+            />
+        <TextView
+            android:id="@+id/extra_idNota"
+            android:layout_toEndOf="@id/extra_idNotatxt"
+            android:layout_alignBaseline="@id/extra_idNotatxt"
+            android:textSize="18sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1"
+
+            />
+
+        <TextView
+            android:id="@+id/extra_descripcion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_below="@id/extra_nombre_materia"
+            android:layout_alignStart="@id/extra_nombre_materia"
+            android:text="Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."/>
+
+
+    </RelativeLayout>
+
+</LinearLayout>

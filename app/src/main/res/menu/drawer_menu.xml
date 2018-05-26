@@ -1,24 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view"
+    >
     <group android:checkableBehavior="none">
         <item
             android:id="@+id/notas"
-            android:icon="@android:drawable/btn_dropdown"
+            android:icon="@drawable/ic_photo_library_black_24dp"
             android:title="Lista Notas" />
 
         <item
             android:id="@+id/materias"
-            android:icon="@android:drawable/list_selector_background"
+            android:icon="@drawable/ic_photo_library_black_24dp"
             android:title="Lista Materias" />
 
         <item
             android:id="@+id/perfil"
-            android:icon="@android:drawable/list_selector_background"
+            android:icon="@drawable/ic_person_black_24dp"
             android:title="Perfil" />
 
         <item
             android:id="@+id/extra"
-            android:icon="@android:drawable/list_selector_background"
+            android:icon="@drawable/ic_info_black_24dp"
             android:title="Extra" />
     </group>
 
