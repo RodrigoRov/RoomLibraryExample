@@ -7,7 +7,7 @@ import android.arch.persistence.room.PrimaryKey;
 
 @Entity(indices = {@Index("id")})
 public class User {
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
     private int id;
 
@@ -26,13 +26,12 @@ public class User {
     @ColumnInfo(name = "phone_number")
     private String phone;
 
-    public User(int id,String firstName, String lastName, String phone,String email, String facebook_user) {
+    public User(String firstName, String lastName, String phone,String email, String facebook_user) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.phone = phone;
         this.email = email;
         this.facebook_user = facebook_user;
-        this.id = id;
     }
 
     public int getId() {

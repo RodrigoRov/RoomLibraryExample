@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +28,9 @@ public class ListaNotasFragment extends Fragment {
     AppDatabase database;
     RecyclerView recyclerView;
     User user;
+    ListaNotasAdapter adapter;
+    List<Note> notas = new ArrayList<Note>();
+    ArrayList<String> nameMaterias = new ArrayList<>();
 
 
     @Nullable
@@ -35,7 +39,10 @@ public class ListaNotasFragment extends Fragment {
         View v = inflater.inflate(R.layout.lista_notas_fragment,container,false);
         recyclerView = v.findViewById(R.id.lista_notas_recycler);
 
-        new setAdapter(database).execute();
+        adapter = new ListaNotasAdapter(getContext(),notas,nameMaterias);
+        adapter.setNotas(true);
+        recyclerView.setAdapter(adapter);
+        new setAdapter(database,nameMaterias,notas).execute(user);
         LinearLayoutManager  linearLayoutManager = new LinearLayoutManager(getContext());
 
         recyclerView.setLayoutManager(linearLayoutManager);
@@ -53,22 +60,28 @@ public class ListaNotasFragment extends Fragment {
         this.user = user;
     }
 
-    private class setAdapter extends AsyncTask<Void,Void,Void>{
+    private class setAdapter extends AsyncTask<User,Void,Void>{
         NoteDao noteDao;
         MateriaDao materiaDao;
         List<Note> notes;
-        ArrayList<String> nomMaterias = new ArrayList<>();
+        ArrayList<String> nomMaterias;
 
-        setAdapter(AppDatabase db){
+        setAdapter(AppDatabase db,ArrayList<String> materias,List<Note> noteList){
             noteDao = db.noteDao();
             materiaDao = db.materiaDao();
+            notes = noteList;
+            nomMaterias = materias;
         };
 
         @Override
-        protected Void doInBackground(Void... voids) {
-            List<Materia> materias =  materiaDao.getMaterias(user.getId());
-            notes = new ArrayList<>();
+        protected Void doInBackground(User... users) {
+            List<Materia>todasMaterias = materiaDao.getAll();
+            Log.d("ID en MATERIAS",String.valueOf(todasMaterias.get(0).getUserId()));
+
+            List<Materia> materias =  materiaDao.getMaterias(users[0].getId());
+            Log.d("Tamano materias",String.valueOf(materias.size()));
             for(Materia m:materias){
+                Log.d("En for de LNF","ENtra");
                 notes.addAll(noteDao.findNotas(m.getIdMateria()));
                 nomMaterias.add(m.getNombre_Materia());
             }
@@ -78,9 +91,8 @@ public class ListaNotasFragment extends Fragment {
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
-            ListaNotasAdapter adapter = new ListaNotasAdapter(getContext(),notes,nomMaterias);
-            adapter.setNotas(true);
-            recyclerView.setAdapter(adapter);
+            adapter.notifyDataSetChanged();
+            Log.d("On Post EXECUTE","Si entra");
         }
     }
 

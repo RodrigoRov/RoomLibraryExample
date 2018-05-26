@@ -12,6 +12,10 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import com.example.alejandro.roomexampleproject.R;
 import com.example.alejandro.roomexampleproject.database.AppDatabase;
@@ -31,7 +35,9 @@ public class MainActivity extends AppCompatActivity {
     ActionBar actionBar;
     AppDatabase database;
     FragmentManager fragmentManager;
-    FragmentTransaction fragmentTransaction;
+    final LoginFragment loginFragment = new LoginFragment();
+    String nombres [] = new String [2];
+
     boolean Allowed;
 
     @Override
@@ -62,14 +68,26 @@ public class MainActivity extends AppCompatActivity {
         //setting up drawerlayout
         drawerLayout = findViewById(R.id.drawerLayout);
 
-        LoginFragment loginFragment = new LoginFragment();
+
+        loginFragment.setDatabase(database);
+        //SETEANDO LOGIN FRAGMENT ID'S
+
+        loginFragment.setOnClick(new LoginFragment.onButtonClicked() {
+            @Override
+            public void onButtonClick() {
+                nombres[0]=loginFragment.getFirst().getText().toString();
+                nombres[1]=loginFragment.getLast().getText().toString();
+                new SearchUser(database).execute(nombres[0],nombres[1]);
+
+            }
+        });
         fragmentManager = getSupportFragmentManager();
-        fragmentTransaction = fragmentManager.beginTransaction();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
 
         fragmentTransaction.add(R.id.contentFrame,loginFragment);
         fragmentTransaction.commit();
-        Allowed = loginFragment.isEncontro();
+        Allowed = false;
 
 
         NavigationView navigationView = findViewById(R.id.navigationView);
@@ -82,17 +100,17 @@ public class MainActivity extends AppCompatActivity {
                 switch (item.getItemId()){
                     case R.id.notas:
                         if(Allowed)
-                            new StartNotas(database).execute();
+                            new StartNotas(database).execute(nombres);
                         break;
 
                     case R.id.materias:
                         if(Allowed)
-                            new StartMaterias(database).execute();
+                            new StartMaterias(database).execute(nombres);
                         break;
 
                     case R.id.perfil:
                         if(Allowed)
-                            new GetUsersAsync(database).execute();
+                            new GetUsersAsync(database).execute(nombres);
                         break;
                     case R.id.extra:
                         if(Allowed)
@@ -104,7 +122,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private class GetUsersAsync extends AsyncTask<Void, User, User>{
+    private class GetUsersAsync extends AsyncTask<String, Void, User>{
         private final UserDao userdao;
 
         private GetUsersAsync(AppDatabase db) {
@@ -112,8 +130,9 @@ public class MainActivity extends AppCompatActivity {
         }
 
         @Override
-        protected User doInBackground(Void... voids) {
-            return userdao.getAll().get(0);
+        protected User doInBackground(String... users) {
+
+            return userdao.findByFullName(users[0],users[1]);
         }
 
         @Override
@@ -122,13 +141,13 @@ public class MainActivity extends AppCompatActivity {
             UserInfoFragment fragment = new UserInfoFragment();
             fragment.setUser(user);
             fragment.setDatabase(database);
-
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             fragmentTransaction.replace(R.id.contentFrame, fragment);
             fragmentTransaction.commit();
         }
     }
 
-    private class StartMaterias extends AsyncTask<Void,User,User>{
+    private class StartMaterias extends AsyncTask<String,User,User>{
         UserDao userDao;
 
         private StartMaterias(AppDatabase db){
@@ -141,37 +160,36 @@ public class MainActivity extends AppCompatActivity {
             ListaMateriaFragment fragment = new ListaMateriaFragment();
             fragment.setUser(user);
             fragment.setDatabase(database);
-
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             fragmentTransaction.replace(R.id.contentFrame, fragment);
             fragmentTransaction.commit();
         }
 
         @Override
-        protected User doInBackground(Void... voids) {
+        protected User doInBackground(String... names) {
 
-            return userDao.getAll().get(0);
+            return userDao.findByFullName(names[0],names[1]);
         }
     }
 
-    private class StartNotas extends AsyncTask<Void,User,User>{
+    private class StartNotas extends AsyncTask<String,Void,User>{
 
         UserDao userDao;
 
         private StartNotas(AppDatabase db){userDao = db.userDao();}
         @Override
-        protected User doInBackground(Void... voids) {
+        protected User doInBackground(String... names) {
 
-            return userDao.getAll().get(0);
+            return userDao.findByFullName(names[0],names[1]);
         }
 
         @Override
         protected void onPostExecute(User user) {
             super.onPostExecute(user);
-            super.onPostExecute(user);
             ListaNotasFragment fragment = new ListaNotasFragment();
             fragment.setUser(user);
             fragment.setDatabase(database);
-
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             fragmentTransaction.replace(R.id.contentFrame, fragment);
             fragmentTransaction.commit();
         }
@@ -184,5 +202,36 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    private class SearchUser extends AsyncTask<String,Void,Boolean>{
+
+        UserDao userDao;
+        SearchUser(AppDatabase db){
+            userDao = db.userDao();
+        }
+
+        @Override
+        protected Boolean doInBackground(String... strings) {
+            User user = userDao.findByFullName(strings[0],strings[1]);
+            if(user == null){
+                userDao.insert(new User(strings[0],strings[1],"","",""));
+            }
+            return true;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean aBoolean) {
+            super.onPostExecute(aBoolean);
+            Allowed = aBoolean;
+            loginFragment.getButton().setVisibility(View.INVISIBLE);
+            loginFragment.getButton().setEnabled(false);
+            loginFragment.getLast().setVisibility(View.INVISIBLE);
+            loginFragment.getLast().setEnabled(false);
+            loginFragment.getFirst().setVisibility(View.INVISIBLE);
+            loginFragment.getFirst().setEnabled(false);
+            loginFragment.getLogin().setText(R.string.login_welcome);
+            loginFragment.getUltimo().setVisibility(View.INVISIBLE);
+            loginFragment.getPrimero().setVisibility(View.INVISIBLE);
+        }
+    }
 
  }

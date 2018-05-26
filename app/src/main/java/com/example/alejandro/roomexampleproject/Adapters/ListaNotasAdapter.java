@@ -76,4 +76,12 @@ public class ListaNotasAdapter extends RecyclerView.Adapter<ListaNotasAdapter.Vi
     public void setNotas(boolean notas) {
         isNotas = notas;
     }
+
+    public void setNoteList(List<Note> noteList) {
+        this.noteList = noteList;
+    }
+
+    public void setNomMaterias(ArrayList<String> nomMaterias) {
+        this.nomMaterias = nomMaterias;
+    }
 }
