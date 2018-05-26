@@ -32,7 +32,7 @@ public class ListaNotasFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.lista_notas,container,false);
+        View v = inflater.inflate(R.layout.lista_notas_fragment,container,false);
         recyclerView = v.findViewById(R.id.lista_notas_recycler);
 
         new setAdapter(database).execute();

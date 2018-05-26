@@ -15,7 +15,7 @@ import com.example.alejandro.roomexampleproject.models.Materia;
 import com.example.alejandro.roomexampleproject.models.Note;
 import com.example.alejandro.roomexampleproject.models.User;
 
-@Database(entities = {User.class, Note.class, Materia.class}, version = 2, exportSchema = false)
+@Database(entities = {User.class, Note.class, Materia.class}, version = 3, exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase{
     private static final String DB_NAME = "notesDatabase.db";
     private static volatile AppDatabase instance;

@@ -1,5 +1,6 @@
 package com.example.alejandro.roomexampleproject.fragments;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -14,6 +15,8 @@ import android.widget.TextView;
 import com.example.alejandro.roomexampleproject.Adapters.ListaNotasAdapter;
 import com.example.alejandro.roomexampleproject.R;
 import com.example.alejandro.roomexampleproject.database.AppDatabase;
+import com.example.alejandro.roomexampleproject.database.daos.MateriaDao;
+import com.example.alejandro.roomexampleproject.database.daos.NoteDao;
 import com.example.alejandro.roomexampleproject.models.Materia;
 import com.example.alejandro.roomexampleproject.models.Note;
 import com.example.alejandro.roomexampleproject.models.User;
@@ -26,42 +29,21 @@ public class ExtraFragment extends Fragment{
     RecyclerView recyclerView;
     TextView nombreMateria,desc,idNota;
     User user;
-    ArrayList<String> nomMaterias = new ArrayList<>();
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.extra_fragment,container,false);
 
-        List<Materia> materias = database.materiaDao().getMaterias(user.getId());
-        final List<Note> notes = new ArrayList<>();
-        for(Materia m:materias){
-            notes.addAll(database.noteDao().findNotas(m.getIdMateria()));
-            nomMaterias.add(m.getNombre_Materia());
-        }
         nombreMateria = v.findViewById(R.id.extra_nombre_materia);
         desc = v.findViewById(R.id.extra_descripcion);
         idNota = v.findViewById(R.id.extra_idNota);
 
 
         recyclerView = v.findViewById(R.id.extra_recycler_view);
-        ListaNotasAdapter adapter = new ListaNotasAdapter(getContext(),notes,nomMaterias);
-        adapter.setNotas(false);
-        adapter.setOnClick(new ListaNotasAdapter.onItemClicked() {
-            @Override
-            public void onItemClick(int position) {
-                Note note = notes.get(position);
-                desc.setText(note.getData());
-                nombreMateria.setText(nomMaterias.get(position));
-                idNota.setText(note.getId());
-            }
-        });
+
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
-        recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(linearLayoutManager);
-
-
-
         return v;
     }
 
@@ -71,5 +53,45 @@ public class ExtraFragment extends Fragment{
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    private class setAdapter extends AsyncTask<Void,Void,Void> {
+        NoteDao noteDao;
+        MateriaDao materiaDao;
+        List<Note> notes;
+        ArrayList<String> nomMaterias = new ArrayList<>();
+
+        setAdapter(AppDatabase db){
+            noteDao = db.noteDao();
+            materiaDao = db.materiaDao();
+        };
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            List<Materia> materias =  materiaDao.getMaterias(user.getId());
+            notes = new ArrayList<>();
+            for(Materia m:materias){
+                notes.addAll(noteDao.findNotas(m.getIdMateria()));
+                nomMaterias.add(m.getNombre_Materia());
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            ListaNotasAdapter adapter = new ListaNotasAdapter(getContext(),notes,nomMaterias);
+            adapter.setNotas(false);
+            adapter.setOnClick(new ListaNotasAdapter.onItemClicked() {
+                @Override
+                public void onItemClick(int position) {
+                    Note note = notes.get(position);
+                    desc.setText(note.getData());
+                    nombreMateria.setText(nomMaterias.get(position));
+                    idNota.setText(note.getId());
+                }
+            });
+            recyclerView.setAdapter(adapter);
+        }
     }
 }
