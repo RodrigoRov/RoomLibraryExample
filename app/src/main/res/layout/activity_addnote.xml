@@ -18,6 +18,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="4dp"
         >
 
         <TextView
@@ -29,7 +30,7 @@
             android:layout_margin="8dp"
             android:layout_height="wrap_content" />
         <EditText
-            android:id="@+id/Add_materia_nombreMateria"
+            android:id="@+id/Add_note_nombreMateria"
             android:layout_width="0dp"
             android:layout_weight="3"
             android:layout_height="wrap_content"
@@ -38,63 +39,46 @@
 
     </LinearLayout>
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        >
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_weight="4"
-            android:text="Nombre Catedratico: "
-            android:textSize="18sp"
-            android:textColor="#000"
-            android:layout_margin="8dp"
-            android:layout_height="wrap_content" />
-        <EditText
-            android:id="@+id/Add_materia_nombreCatedratico"
-            android:layout_width="0dp"
-            android:layout_weight="4"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            />
-    </LinearLayout>
-    <LinearLayout
+        android:layout_margin="4dp"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1">
 
         <TextView
             android:layout_width="0dp"
-            android:layout_weight="4"
-            android:text="Nota de Materia: "
+            android:layout_weight="1"
+            android:text="Nota: "
             android:textSize="18sp"
             android:textColor="#000"
             android:layout_margin="8dp"
             android:layout_height="wrap_content" />
         <EditText
-            android:id="@+id/Add_materia_notaMateria"
+            android:id="@+id/Add_note_nota"
             android:layout_width="0dp"
             android:layout_weight="4"
-            android:inputType="number"
+            android:inputType="textMultiLine"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
             />
     </LinearLayout>
 
+
+
     <Button
-        android:id="@+id/Add_materia_add"
+        android:id="@+id/Add_note_add"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:text="Añadir"/>
-
+        android:text="Añadir"
+        android:layout_margin="8dp"/>
     <Button
-        android:id="@+id/Add_materia_cancelar"
+        android:id="@+id/Add_note_cancelar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:text="Cancelar"
         android:layout_margin="8dp"/>
+
 
 
 </LinearLayout>

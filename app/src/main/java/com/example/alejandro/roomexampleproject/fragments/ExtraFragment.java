@@ -71,10 +71,12 @@ public class ExtraFragment extends Fragment{
         @Override
         protected Void doInBackground(User... users) {
             List<Materia> materias =  materiaDao.getMaterias(users[0].getId());
-            notes = new ArrayList<>();
+            notes=new ArrayList<>();
             for(Materia m:materias){
                 notes.addAll(noteDao.findNotas(m.getIdMateria()));
-                nomMaterias.add(m.getNombre_Materia());
+            }
+            for(Note n:notes){
+                nomMaterias.add(materiaDao.findMateriaByID(n.getMateriaId()).getNombre_Materia());
             }
             return null;
         }

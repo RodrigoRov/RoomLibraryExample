@@ -106,12 +106,9 @@ public class ListaMateriaFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Log.d("Activity R","SI entra");
         if(requestCode == NEW_ADDMATERIA_ACTIVITY_REQUEST_CODE){
-            Log.d("Entra al if?","si");
-            adapter.notifyDataSetChanged();
+            new setAdapter(database).execute(user);
             Toast.makeText(getContext(),data.getStringExtra("Respuesta"),Toast.LENGTH_SHORT).show();
         }
-        Log.d("Entra al if?","no");
     }
 }

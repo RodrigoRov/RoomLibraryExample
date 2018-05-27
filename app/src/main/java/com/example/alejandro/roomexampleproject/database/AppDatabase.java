@@ -82,6 +82,7 @@ public abstract class AppDatabase extends RoomDatabase{
         protected Void doInBackground(Void... voids) {
             userDao.deleteAll();
             materiaDao.deleteAll();
+            noteDao.deleteAll();
             User user = new User("Alejandro", "Velasco", "22577777","00357215@uca.edu.sv","PUSSY DESTROYER");
             user.setId(1);
             User user2 = new User("Enrique", "Palacios", "22577777","00008415@uca.edu.sv","DICK DESTROYER");

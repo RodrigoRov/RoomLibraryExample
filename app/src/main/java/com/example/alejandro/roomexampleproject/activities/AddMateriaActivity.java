@@ -19,7 +19,7 @@ import com.example.alejandro.roomexampleproject.models.Materia;
 
 public class AddMateriaActivity extends AppCompatActivity {
     EditText nombreMat,nombreCat,notaMat;
-    Button button;
+    Button button,cancelar;
     AppDatabase database;
     Toolbar toolbar;
 
@@ -32,6 +32,7 @@ public class AddMateriaActivity extends AppCompatActivity {
         nombreMat = findViewById(R.id.Add_materia_nombreMateria);
         notaMat = findViewById(R.id.Add_materia_notaMateria);
         database = AppDatabase.getInstance(getApplicationContext());
+        cancelar = findViewById(R.id.Add_materia_cancelar);
 
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -56,6 +57,16 @@ public class AddMateriaActivity extends AppCompatActivity {
                 }else{
                     Toast.makeText(v.getContext(),"Favor ingresar un Catedratico",Toast.LENGTH_SHORT).show();
                 }
+            }
+        });
+
+        cancelar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent replyIntent = new Intent();
+                replyIntent.putExtra("Respuesta","Ha cancelado ingresar materia");
+                setResult(1,replyIntent);
+                finish();
             }
         });
 

@@ -32,5 +32,11 @@ public interface MateriaDao {
     @Query("SELECT * FROM Materia WHERE user_id=(:userId)")
     List<Materia> getMaterias(int userId);
 
+    @Query("SELECT * FROM Materia WHERE nombre_Materia=(:nombre) AND user_id=(:userId)")
+    Materia getMateria(String nombre,int userId);
+
+    @Query("SELECT * FROM Materia WHERE idMateria=(:idMat)")
+    Materia findMateriaByID(int idMat);
+
 
 }
