@@ -24,6 +24,7 @@ import com.example.alejandro.roomexampleproject.database.AppDatabase;
 import com.example.alejandro.roomexampleproject.database.daos.MateriaDao;
 import com.example.alejandro.roomexampleproject.database.daos.NoteDao;
 import com.example.alejandro.roomexampleproject.database.daos.UserDao;
+import com.example.alejandro.roomexampleproject.fragments.ExtraFragment;
 import com.example.alejandro.roomexampleproject.fragments.ListaMateriaFragment;
 import com.example.alejandro.roomexampleproject.fragments.ListaNotasFragment;
 import com.example.alejandro.roomexampleproject.fragments.LoginFragment;
@@ -136,7 +137,7 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     case R.id.extra:
                         if(Allowed)
-                            new StartExtras().execute();
+                            new StartExtras(database).execute(nombres);
                         break;
                 }
                 return true;
@@ -224,10 +225,26 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private class StartExtras extends AsyncTask<Void,User,User>{
+    private class StartExtras extends AsyncTask<String,Void,User>{
+        UserDao userDao;
+
+        public StartExtras(AppDatabase db){
+            userDao = db.userDao();
+        }
         @Override
-        protected User doInBackground(Void... voids) {
-            return null;
+        protected User doInBackground(String... names) {
+            return userDao.findByFullName(names[0],names[1]);
+        }
+
+        @Override
+        protected void onPostExecute(User user) {
+            super.onPostExecute(user);
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            ExtraFragment extraFragment = new ExtraFragment();
+            extraFragment.setDatabase(database);
+            extraFragment.setUser(user);
+            fragmentTransaction.replace(R.id.contentFrame,extraFragment);
+            fragmentTransaction.commit();
         }
     }
 

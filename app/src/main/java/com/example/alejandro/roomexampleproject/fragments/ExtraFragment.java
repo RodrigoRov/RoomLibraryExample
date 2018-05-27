@@ -29,6 +29,7 @@ public class ExtraFragment extends Fragment{
     RecyclerView recyclerView;
     TextView nombreMateria,desc,idNota;
     User user;
+    ListaNotasAdapter adapter;
 
     @Nullable
     @Override
@@ -39,7 +40,7 @@ public class ExtraFragment extends Fragment{
         desc = v.findViewById(R.id.extra_descripcion);
         idNota = v.findViewById(R.id.extra_idNota);
 
-
+        new setAdapter(database).execute(user);
         recyclerView = v.findViewById(R.id.extra_recycler_view);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
@@ -55,7 +56,7 @@ public class ExtraFragment extends Fragment{
         this.user = user;
     }
 
-    private class setAdapter extends AsyncTask<Void,Void,Void> {
+    private class setAdapter extends AsyncTask<User,Void,Void> {
         NoteDao noteDao;
         MateriaDao materiaDao;
         List<Note> notes;
@@ -64,11 +65,11 @@ public class ExtraFragment extends Fragment{
         setAdapter(AppDatabase db){
             noteDao = db.noteDao();
             materiaDao = db.materiaDao();
-        };
+        }
 
         @Override
-        protected Void doInBackground(Void... voids) {
-            List<Materia> materias =  materiaDao.getMaterias(user.getId());
+        protected Void doInBackground(User... users) {
+            List<Materia> materias =  materiaDao.getMaterias(users[0].getId());
             notes = new ArrayList<>();
             for(Materia m:materias){
                 notes.addAll(noteDao.findNotas(m.getIdMateria()));
@@ -80,7 +81,7 @@ public class ExtraFragment extends Fragment{
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
-            ListaNotasAdapter adapter = new ListaNotasAdapter(getContext(),notes,nomMaterias);
+            adapter = new ListaNotasAdapter(getContext(),notes,nomMaterias);
             adapter.setNotas(false);
             adapter.setOnClick(new ListaNotasAdapter.onItemClicked() {
                 @Override
@@ -88,7 +89,8 @@ public class ExtraFragment extends Fragment{
                     Note note = notes.get(position);
                     desc.setText(note.getData());
                     nombreMateria.setText(nomMaterias.get(position));
-                    idNota.setText(note.getId());
+                    idNota.setText(String.valueOf(note.getId()));
+                    idNota.setVisibility(View.VISIBLE);
                 }
             });
             recyclerView.setAdapter(adapter);

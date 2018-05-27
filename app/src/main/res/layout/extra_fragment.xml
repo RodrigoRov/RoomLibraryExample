@@ -21,7 +21,6 @@
             android:id="@+id/extra_nombre_materia"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Programacion"
             android:textSize="24sp"
             android:layout_alignParentTop="true"
             android:layout_alignParentStart="true"
@@ -34,9 +33,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Id Nota: "
+            android:visibility="invisible"
             android:layout_toEndOf="@id/extra_nombre_materia"
             android:layout_alignBaseline="@id/extra_nombre_materia"
-            android:layout_marginLeft="16dp"
+            android:layout_marginStart="16dp"
             android:textSize="18sp"
             />
         <TextView
@@ -46,8 +46,6 @@
             android:textSize="18sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="1"
-
             />
 
         <TextView
@@ -58,7 +56,7 @@
             android:layout_marginEnd="8dp"
             android:layout_below="@id/extra_nombre_materia"
             android:layout_alignStart="@id/extra_nombre_materia"
-            android:text="Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."/>
+            />
 
 
     </RelativeLayout>
