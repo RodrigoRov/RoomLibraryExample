@@ -39,6 +39,7 @@ public class ExtraFragment extends Fragment{
         nombreMateria = v.findViewById(R.id.extra_nombre_materia);
         desc = v.findViewById(R.id.extra_descripcion);
         idNota = v.findViewById(R.id.extra_idNota);
+        idNota.setVisibility(View.INVISIBLE);
 
         new setAdapter(database).execute(user);
         recyclerView = v.findViewById(R.id.extra_recycler_view);

@@ -1,5 +1,6 @@
 package com.example.alejandro.roomexampleproject.fragments;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -8,12 +9,16 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.alejandro.roomexampleproject.Adapters.ListaMateriaAdapter;
 import com.example.alejandro.roomexampleproject.R;
+import com.example.alejandro.roomexampleproject.activities.AddMateriaActivity;
+import com.example.alejandro.roomexampleproject.activities.MainActivity;
 import com.example.alejandro.roomexampleproject.database.AppDatabase;
 import com.example.alejandro.roomexampleproject.database.daos.MateriaDao;
 import com.example.alejandro.roomexampleproject.models.Materia;
@@ -23,7 +28,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ListaMateriaFragment extends Fragment {
-
+    public static final int NEW_ADDMATERIA_ACTIVITY_REQUEST_CODE = 1;
     RecyclerView recyclerView;
     ListaMateriaAdapter adapter;
     User user;
@@ -49,7 +54,9 @@ public class ListaMateriaFragment extends Fragment {
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent = new Intent(getActivity(), AddMateriaActivity.class);
+                intent.putExtra("UserId",user.getId());
+                startActivityForResult(intent, NEW_ADDMATERIA_ACTIVITY_REQUEST_CODE);
             }
         });
 
@@ -94,5 +101,17 @@ public class ListaMateriaFragment extends Fragment {
             recyclerView.setAdapter(adapter);
 
         }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Log.d("Activity R","SI entra");
+        if(requestCode == NEW_ADDMATERIA_ACTIVITY_REQUEST_CODE){
+            Log.d("Entra al if?","si");
+            adapter.notifyDataSetChanged();
+            Toast.makeText(getContext(),data.getStringExtra("Respuesta"),Toast.LENGTH_SHORT).show();
+        }
+        Log.d("Entra al if?","no");
     }
 }
