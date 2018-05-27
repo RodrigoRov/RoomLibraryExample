@@ -3,4 +3,14 @@
     <string name="boton_cancelar">Cancelar</string>
     <string name="boton_editar">Editar</string>
     <string name="login_welcome">Welcome</string>
+    <string name="lista_notas">Lista Notas</string>
+    <string name="lista_materias">Lista Materias</string>
+    <string name="perfil">Perfil</string>
+    <string name="extra">Extra</string>
+    <string name="log_out">Log Out</string>
+    <string name="login">Login</string>
+    <string name="first_name">First Name:</string>
+    <string name="first">Rodrigo</string>
+    <string name="last_name">Last Name:</string>
+    <string name="last">Rovelo</string>
 </resources>

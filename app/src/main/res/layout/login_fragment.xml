@@ -9,7 +9,7 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="200dp"
-        android:text="Login"
+        android:text="@string/login"
         android:textColor="#000"
         android:textSize="24sp"
         />
@@ -23,7 +23,7 @@
             android:textSize="18sp"
             android:textColor="#000"
             android:layout_toStartOf="@id/Login_login"
-            android:text="First Name: " />
+            android:text="@string/first_name" />
 
         <EditText
             android:id="@+id/Login_first_name"
@@ -34,7 +34,7 @@
             android:layout_marginStart="16dp"
             android:layout_toEndOf="@id/Login_usernametxt"
             android:layout_alignBaseline="@id/Login_usernametxt"
-            android:hint="Rodrigo Rovelo"
+            android:hint="@string/first"
             android:maxWidth="130dp"/>
 
         <TextView
@@ -42,7 +42,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="Last Name: "
+            android:text="@string/last_name"
             android:layout_alignStart="@id/Login_usernametxt"
             android:layout_marginTop="24dp"
             android:textSize="18sp"
@@ -54,6 +54,7 @@
             android:inputType="text"
             android:layout_centerInParent="true"
             android:layout_width="130dp"
+            android:hint="@string/last"
             android:layout_height="wrap_content"
             android:layout_toEndOf="@id/Login_passwordtxt"
             android:layout_marginStart="16dp"

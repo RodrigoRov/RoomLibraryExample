@@ -11,6 +11,8 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -46,6 +48,26 @@ public class MainActivity extends AppCompatActivity {
             case android.R.id.home:
                 drawerLayout.openDrawer(GravityCompat.START);
                 return true;
+            case R.id.log_out:
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                loginFragment.setDatabase(database);
+                loginFragment.getFirst().setText("");
+                loginFragment.getLast().setText("");
+                loginFragment.getPrimero().setVisibility(View.VISIBLE);
+                loginFragment.getUltimo().setVisibility(View.VISIBLE);
+                loginFragment.getLast().setVisibility(View.VISIBLE);
+                loginFragment.getFirst().setVisibility(View.VISIBLE);
+                loginFragment.getButton().setVisibility(View.VISIBLE);
+                loginFragment.getButton().setEnabled(true);
+                loginFragment.getFirst().setEnabled(true);
+                loginFragment.getLast().setEnabled(true);
+                loginFragment.getLogin().setText(R.string.login);
+                Allowed = false;
+                nombres = new String[2];
+                fragmentTransaction.replace(R.id.contentFrame,loginFragment);
+                fragmentTransaction.commit();
+                return true;
+
         }
         return super.onOptionsItemSelected(item);
     }
@@ -65,12 +87,12 @@ public class MainActivity extends AppCompatActivity {
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setHomeAsUpIndicator(R.drawable.ic_menu);
 
+
         //setting up drawerlayout
         drawerLayout = findViewById(R.id.drawerLayout);
 
 
         loginFragment.setDatabase(database);
-        //SETEANDO LOGIN FRAGMENT ID'S
 
         loginFragment.setOnClick(new LoginFragment.onButtonClicked() {
             @Override
@@ -120,6 +142,13 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_toolbar, menu);
+        return true;
     }
 
     private class GetUsersAsync extends AsyncTask<String, Void, User>{

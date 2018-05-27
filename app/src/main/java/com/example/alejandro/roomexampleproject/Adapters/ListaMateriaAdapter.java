@@ -37,7 +37,7 @@ public class ListaMateriaAdapter extends RecyclerView.Adapter<ListaMateriaAdapte
 
         holder.nombreCatedratico.setText(materia.getCatedratico());
         holder.nombreMateria.setText(materia.getNombre_Materia());
-        holder.nota.setText(materia.getNota());
+
     }
 
     @Override
@@ -46,13 +46,12 @@ public class ListaMateriaAdapter extends RecyclerView.Adapter<ListaMateriaAdapte
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView nombreMateria,nombreCatedratico,nota;
+        TextView nombreMateria,nombreCatedratico;
 
         public ViewHolder(View itemView) {
             super(itemView);
             nombreMateria = itemView.findViewById(R.id.nombre_materia);
             nombreCatedratico = itemView.findViewById(R.id.nombre_catedratico);
-            nota = itemView.findViewById(R.id.nota_materia);
         }
     }
 }

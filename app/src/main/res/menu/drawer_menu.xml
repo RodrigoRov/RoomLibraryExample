@@ -7,22 +7,22 @@
         <item
             android:id="@+id/notas"
             android:icon="@drawable/ic_photo_library_black_24dp"
-            android:title="Lista Notas" />
+            android:title="@string/lista_notas" />
 
         <item
             android:id="@+id/materias"
             android:icon="@drawable/ic_photo_library_black_24dp"
-            android:title="Lista Materias" />
+            android:title="@string/lista_materias" />
 
         <item
             android:id="@+id/perfil"
             android:icon="@drawable/ic_person_black_24dp"
-            android:title="Perfil" />
+            android:title="@string/perfil" />
 
         <item
             android:id="@+id/extra"
             android:icon="@drawable/ic_info_black_24dp"
-            android:title="Extra" />
+            android:title="@string/extra" />
     </group>
 
 </menu>
